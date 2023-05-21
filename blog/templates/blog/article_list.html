@@ -1,14 +1,16 @@
 {% extends 'blog/homepage.html' %}
 
 {% block title %}Articles List{% endblock %}
+{% block headline %}Articles List{% endblock %}
 {% block content %}
+<!--Search line-->
 <div class="d-flex justify-content-center mb-3">
     <form class="d-flex w-50" role="search">
       <input class="form-control me-2" type="search" placeholder="Find article" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Find</button>
     </form>
 </div>
-
+<!--Article instance-->
 <div class="container-md">
     <nav aria-label="Page navigation example">
         {% for article in articles %}
@@ -25,7 +27,7 @@
         </div>
 
         {% endfor %}
-
+<!--Paginator-->
         {% if is_paginated %}
         <ul class="pagination">
             {% if page_obj.has_previous %}
