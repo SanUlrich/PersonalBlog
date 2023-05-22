@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.views import generic
 
 from .models import Article
+from .forms import RegisterUserForm
 
 
 def homepage(request):
@@ -27,3 +29,19 @@ class ArticleDetailView(generic.DetailView):
     """
     model = Article
     template_name = "blog/article_detail.html"
+
+
+def register_page(request):
+    """
+    Returns the new user registration form.
+    """
+    form = RegisterUserForm()
+    if request.method == "POST":
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get("username")
+            messages.success(request, f'Welcome {user}!')
+            return redirect("blog:logging")
+    context = {"form": form}
+    return render(request, "accounts/register.html", context)
