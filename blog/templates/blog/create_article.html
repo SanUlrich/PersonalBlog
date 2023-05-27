@@ -1,0 +1,31 @@
+{% extends 'blog/homepage.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Create New Article{% endblock %}
+
+{% block content %}
+<div class="container-md justify-content-center mt-3">
+    <div class="text-center"><h4>Create New Article</h4></div>
+    <div class="container-max">
+        <form method="POST" class="list-group-item border-0">
+        {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                {% if field.name == 'intro' %}
+                {% render_field field class+="form-control" placeholder=field.label rows=3 %}
+                {% else %}
+                {% render_field field class+="form-control" placeholder=field.label %}
+                {% endif %}
+            </div>
+            <div id="passwordHelpBlock" class="form-text">
+                {{ field.errors }}
+            </div>
+            {% endfor %}
+            <div class="d-flex justify-content-between align-items-center">
+                <button type="submit" class="btn btn-primary" name="Post">Post</button>
+                <a class="btn btn-outline-danger" href="#">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
