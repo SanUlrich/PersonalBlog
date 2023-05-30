@@ -15,18 +15,22 @@
     <div class="container-max">
         <nav aria-label="Page navigation example">
         {% for article in articles %}
-
-        <div class="list-group mb-3">
-            <a href="{% url 'blog:article-detail' article.slug %}" class="list-group-item list-group-item-action" aria-current="true">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-2">{{ article.article_title }}</h5>
-                    <small>{{ article.publication_date }}</small>
-                </div>
-                <p class="mb-2">{{ article.intro }}</p>
-                <small>#{{ article.id }}</small>
-            </a>
-        </div>
-
+            <div class="list-group mb-3">
+                <a href="{% url 'blog:article-detail' article.slug %}" class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-2">{{ article.article_title }}</h5>
+                        <small>{{ article.publication_date }}</small>
+                    </div>
+                    <p class="mb-2">{{ article.intro }}</p>
+                    <div class="d-flex w-100 justify-content-between">
+                        <small>Author: {{ article.author }}</small>
+                        <small>
+                            <img src="{% static 'blog/icons/like.png' %}" width="17px"> {{ article.like }}
+                            <img src="{% static 'blog/icons/dislike.png' %}" width="17px"> {{ article.dislike }}
+                        </small>
+                    </div>
+                </a>
+            </div>
         {% endfor %}
 <!--Paginator-->
         {% if is_paginated %}
