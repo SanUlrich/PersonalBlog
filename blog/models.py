@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from pytils.translit import slugify
+
 
 class Article(models.Model):
     """
@@ -19,8 +21,15 @@ class Article(models.Model):
     def __str__(self):
         return self.article_title
 
+    def save(self, *args, **kwargs):
+        """
+        Automatically generates a slug based on the article title.
+        """
+        self.slug = slugify(self.article_title)
+        super(Article, self).save(*args, **kwargs)
+
     class Meta:
-        ordering = ['-update_date', '-publication_date']
+        ordering = ["-update_date", "-publication_date"]
         verbose_name = "Article"
         verbose_name_plural = "Articles"
 
