@@ -10,6 +10,7 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous">
     </script>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'blog/css/style.css' %}">
     <link rel="shortcut icon" href="{% static 'blog/icons/favicon.ico' %}" type="image/x-icon">
     <meta charset="UTF-8">
     <title>{% block title %}Personal Blog{% endblock %}</title>
@@ -18,14 +19,23 @@
 <body>
     <nav class="navbar navbar-light bg-light border-bottom">
         <div class="container-md">
-            <a class="navbar-brand" href="{% url 'blog:homepage' %}">
-                <img src="{% static 'blog/icons/blogicon.png' %}" alt="To the homepage" width="30" height="24" class="d-inline-block align-text-top">
-            Personal Blog
+            <a class="navbar-brand" href="{% url 'blog:article-list' %}">
+                <img src="{% static 'blog/icons/blogicon.png' %}"
+                     alt="To the homepage" width="30" height="24"
+                     class="d-inline-block align-text-top">
+                {{ user.username|default:'Personal Blog' }}
             </a>
-            <form class="d-flex">
+            {% if user.is_authenticated %}
+            <div class="d-flex">
+                <a class="btn btn-outline-success" href="{% url 'blog:create-new-article' %}">Create new article</a>
+                <a class="btn btn-outline-danger" href="{% url 'blog:logout' %}">Log Out</a>
+            </div>
+            {% else %}
+            <div class="d-flex">
                 <a class="btn btn-link" href="{% url 'blog:login' %}">Log In</a>
-                <a class="btn btn-outline-success" href="{% url 'blog:register' %}">Register</a>
-            </form>
+                <a class="btn btn-outline-success" href="{% url 'blog:registering' %}">Register</a>
+            </div>
+            {% endif %}
         </div>
     </nav>
     {% block content %}{% endblock %}
